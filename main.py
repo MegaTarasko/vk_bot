@@ -1,10 +1,11 @@
 import vk_api, json, random, pymysql
+import config
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
 import requests
 
 
-vk_session  = vk_api.VkApi(token = "")
+vk_session  = vk_api.VkApi(token = config.TOKEN)
 vk          = vk_session.get_api()
 longpoll    = VkLongPoll(vk_session)
 
@@ -23,7 +24,9 @@ def send_video (id, url):
 def read_from_txt ():
     with open ('rand_answer.txt', 'r', encoding='utf-8') as file:
         x = file.readlines()
-        print(x[3])
+        print(x[random.randint(0,3)])
+        answer = 'x[random.randint(0,3)]'
+        return answer
 
 def adder (x):
     file = open('data.txt', 'a',encoding='utf-8')
@@ -146,6 +149,7 @@ def main():
                 if msg == 'помощь':
                     sender(id, 'Смотри что я умею 	&#128522;')
                     send_stick(id, 64)
+                    sender(id, read_from_txt)
                     read_from_txt()
 
 
